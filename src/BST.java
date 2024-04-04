@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 /**
  * An Integer Binary Search Tree
- * @author: Your Name Here
- * @version: Date
+ * @author: Sofia Aguilar
+ * @version: 04/04/24
  */
 
 public class BST {
@@ -48,20 +48,25 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
+        // calls helper function for recursive method
         return searchTree(val, root);
     }
-    public boolean searchTree(int val, BSTNode root){
-        if (root == null){
+    public boolean searchTree(int val, BSTNode currentNode){
+        // return a false if the end of the search and finds that the current Node is null
+        if (currentNode == null){
             return false;
         }
-        if ( val == root.getVal()){
+        // return true if the value is the current Node
+        if ( val == currentNode.getVal()){
             return true;
         }
-        else if (val < root.getVal()){
-            return searchTree(val, root.getLeft());
+        // search on the left side
+        else if (val < currentNode.getVal()){
+            return searchTree(val, currentNode.getLeft());
         }
+        // searches the right side
         else {
-            return searchTree(val, root.getRight());
+            return searchTree(val, currentNode.getRight());
         }
     }
 
@@ -71,25 +76,23 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         // TODO: Complete inorder traversal
-        // Return an ArrayList<BSTNode> that represents the Inorder Traversal of the tree.
-        //Inorder Traversal visits each node from Left → Root → Right
+        // initialize the arrayList
         ArrayList<BSTNode> inOrder = new ArrayList<>();
+        // call the helper method
         return inOrderTraversal(root, inOrder);
     }
-    public ArrayList<BSTNode> inOrderTraversal(BSTNode node, ArrayList<BSTNode> inOrder){
-       // base case
-        if (node.getLeft() == null && node.getRight() == null){
-            inOrder.add(node);
+    public ArrayList<BSTNode> inOrderTraversal(BSTNode currentNode, ArrayList<BSTNode> inOrder){
+        // if reached the leafs then return the array List
+        if (currentNode == null){
             return inOrder;
         }
-
-        // goes through left
-        inOrderTraversal(node.getLeft(), inOrder);
-        inOrder.add(node);
-
-        // goes through right
-        inOrderTraversal(node.getRight(), inOrder);
-
+        // goes to the left
+        inOrderTraversal(currentNode.getLeft(), inOrder);
+        // add the current node
+        inOrder.add(currentNode);
+        // goes to the right
+        inOrderTraversal(currentNode.getRight(), inOrder);
+        // finally returns the Arraylist after added all the possible nodes in the tree
         return inOrder;
     }
 
@@ -98,20 +101,23 @@ public class BST {
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
+        // initialize the arrayList
         ArrayList<BSTNode> preOrder = new ArrayList<>();
+        // call the helper method
         return preOrderTraversal(root, preOrder);
     }
-    public ArrayList<BSTNode> preOrderTraversal(BSTNode node, ArrayList<BSTNode> preOrder){
-        if (node == null){
+    public ArrayList<BSTNode> preOrderTraversal(BSTNode currentNode, ArrayList<BSTNode> preOrder){
+        // if reached the leafs then return the array List
+        if (currentNode == null){
             return preOrder;
         }
         // adds current node
-        preOrder.add(node);
+        preOrder.add(currentNode);
         // goes through left
-        preOrderTraversal(node.getLeft(), preOrder);
+        preOrderTraversal(currentNode.getLeft(), preOrder);
         // goes through right
-        preOrderTraversal(node.getRight(), preOrder);
-
+        preOrderTraversal(currentNode.getRight(), preOrder);
+        // finally returns the Arraylist after added all the possible nodes in the tree
         return preOrder;
     }
 
@@ -120,22 +126,23 @@ public class BST {
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
+        // initialize the arrayList
         ArrayList<BSTNode> postOrder = new ArrayList<>();
+        // call the helper method
         return postOrderTraversal(root, postOrder);
     }
-    public ArrayList<BSTNode> postOrderTraversal(BSTNode root, ArrayList<BSTNode> postOrder){
-        if (root== null){
+    public ArrayList<BSTNode> postOrderTraversal(BSTNode currentNode, ArrayList<BSTNode> postOrder){
+        // if reached the leafs then return the array List
+        if (currentNode== null){
             return postOrder;
         }
-        // left
-        postOrderTraversal(root.getLeft(), postOrder);
-
-        // right
-        postOrderTraversal(root.getRight(), postOrder);
-
-        // add root
-        postOrder.add(root);
-
+        // goes through the left
+        postOrderTraversal(currentNode.getLeft(), postOrder);
+        // goes through the right
+        postOrderTraversal(currentNode.getRight(), postOrder);
+        // add the current node
+        postOrder.add(currentNode);
+        // finally returns the Arraylist after added all the possible nodes in the tree
         return postOrder;
     }
 
@@ -148,20 +155,24 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
-        insertNode(root, val);
+        // root has to hold the new BSTNode coming from the helper method and
+        root = insertNode(root, val);
     }
 
-    public BSTNode insertNode(BSTNode node, int val) {
-        if (node == null) {
-            return node;
+    public BSTNode insertNode(BSTNode currentNode, int val) {
+        if (currentNode == null) {
+            // create a new node to set it in place
+            return new BSTNode(val);
         }
-        if (val < node.getVal()) {
-            node.setLeft(insertNode(node.getLeft(), val));
+        if (val < currentNode.getVal()) {
+            // set it on the left child and check again
+            currentNode.setLeft(insertNode(currentNode.getLeft(), val));
         }
-        else if (val > node.getVal()) {
-            node.setRight(insertNode(node.getRight(), val));
+        else if (val > currentNode.getVal()) {
+            // set it the right child and check again
+            currentNode.setRight(insertNode(currentNode.getRight(), val));
         }
-        return node;
+        return currentNode;
     }
 
     /**
