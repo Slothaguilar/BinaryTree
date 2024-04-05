@@ -155,7 +155,7 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
-        // root has to hold the new BSTNode coming from the helper method and
+        // returns the tree with the node inserted
         root = insertNode(root, val);
     }
 
